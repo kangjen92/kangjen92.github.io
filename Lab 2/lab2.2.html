@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="description"	content="Data Visualisation lab2.2"/>
+	<meta name="keywords"		  content="HTML, CSS, D3"/>
+	<meta name="author"			  content="Ng Kang Jen"/>
+
+	<title>Task 2.2 D3 Drawing With Data - Bar Chart</title>
+	<!--Insert description of exercise  -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+	<link rel="stylesheet"  href="/styles.css">
+</head>
+
+<body>
+
+	<h1>Creating and formatting paragraph elements with D3</h1>
+    <h2>Author: Ng Kang Jen</h2>
+
+    <nav>
+        <a href="/main.html">Main Menu</a>
+        <a href="lab2.1.html">Lab2.1</a>
+        <a href="lab2.3.html">Lab2.3</a>
+        <a href="lab2.4.html">Lab2.4</a>
+    </nav>
+    <br>
+    <h1>SECTION C1 QUESTION: Show the data value just under the top line of the bar</h1>
+	<script>
+    // Example from murray
+    var w = 500;
+    var h = 100;
+    var barPadding = 1;
+
+    var dataset = [14, 18, 20, 16, 11, 19, 17, 12, 13, 15]  // add more num
+
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h)
+    
+    svg.selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("x",function(d, i) {
+            return i * (w / dataset.length);
+        })
+        .attr("y",function(d){
+            return h - (d*4)
+        })
+        .attr("width",function(d) {
+            return (w / dataset.length-barPadding);
+        })
+        .attr("height",function(d){
+            return d*4;
+        })
+        .attr("fill","green")
+
+    svg.selectAll("text")
+    .data(dataset)
+    .enter()
+    .append("text")
+    .text(function(d) {
+        return d;
+    })
+    .attr("fill","black")
+    .attr("x", function(d,i){
+        return i * (w / dataset.length) + 16;
+    })
+    .attr("y", function(d){
+        return h - (d*3)
+    })
+
+
+    </script>
+
+    <br>
+    <bf>
+
+    <footer style="color: grey;">COS30045 Data Visualisation<br></footer>
+    <footer>Semester 2 2024</footer>
+    <footer>Ng Kang Jen</footer>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Data Visualisation lab2.3" />
+    <meta name="keywords" content="HTML, CSS, D3" />
+    <meta name="author" content="Ng Kang Jen" />
+
+    <title>Task 2.3 D3 Drawing With Data - Splatter plot</title>
+    <!--Insert description of exercise  -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+	<link rel="stylesheet"  href="/styles.css">
+</head>
+
+<body>
+
+    <h1>Creating and formatting paragraph elements with D3</h1>
+    <h2>Author: Ng Kang Jen</h2>
+
+    <nav>
+        <a href="/main.html">Main Menu</a>
+        <a href="lab2.1.html">Lab2.1</a>
+        <a href="lab2.2.html">Lab2.2</a>
+        <a href="lab2.4.html">Lab2.4</a>
+    </nav>
+    <br>
+    <script>
+        // Example from murray
+        var w = 500;
+        var h = 100;
+
+        var dataset = [
+            [5, 20],
+            [100, 90],
+            [250, 50],
+            [100, 33],
+            [330, 95],
+            [200, 20],
+            [150, 44],
+            [25, 67],
+            [85, 21],
+            [220, 88],
+        ];
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+        svg.selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle")
+            .attr("cx", function (d) {
+                return d[0];
+            })
+            .attr("cy", function (d) {
+                return d[1];
+            })
+            .attr("r", 5)
+            .attr("fill", function (d) {
+                if (d[0] > 400 || d[1] > 80) {
+                    return "red"; // Highlight data points with x > 400 or y > 80
+                } else {
+                    return "slategrey"; // Default color for other data points
+                }
+            });
+
+        svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                return "(" + d[0] + ", " + d[1] + ")";
+            })
+            .attr("fill", "black")
+            .attr("font-size", "10px") // Adjust text size
+            .attr("x", function (d) {
+                return d[0] + 8; // Adjust x position (slightly to the right of the circle)
+            })
+            .attr("y", function (d) {
+                return d[1] - 8; // Adjust y position (slightly above the circle)
+            });
+
+    </script>
+
+    <footer style="color: grey;">COS30045 Data Visualisation<br></footer>
+    <footer>Semester 2 2024</footer>
+    <footer>Ng Kang Jen</footer>
+
+</body>
+
+</html>
+
