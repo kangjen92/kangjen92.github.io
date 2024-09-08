@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="description"	content="Data Visualisation Exercise 1.2"/>
+	<meta name="keywords"		  content="HTML, CSS, Javascript"/>
+	<meta name="author"			  content="Ng Kang Jen"/>
+
+	<title>Task 1.2 Javascript</title>
+	<!--Insert description of exercise  -->
+	<link rel="stylesheet"  href="styles.css">
+    
+</head>
+
+<body>
+
+	<h1>Pets and the Pandemic </h1>
+	<h2>Author: Ng Kang Jen</h2>
+
+    <nav>
+        <a href="main.html">Main Menu</a>
+        <a href="lab1.1.html">Lab1.1</a>
+        <a href="lab1.3.html">Lab1.3</a>
+    </nav>
+
+    <p>A report from Animal Medicines Australia (AMA) has found that many Australians took the opportunity to introduce a pet into their household during the pandemic. Their survey indicated that there was a significant increase in the percent of households taking in a new dog, fish or bird. Their research also indicated that pets had a number of positive influences on their lives such as:</p>
+
+    <ul style="list-style: none;">
+    <li>companionship</li>
+    <li>better mental health</li>
+    <li>joy and happiness.</li>
+    </ul>
+
+    <button class="button1" onclick="show('img19.png', 'Fig 1. Percent of most popular pet owned by Australians in 2019' , 'img19')">2019</button>
+    <button class="button2" onclick="show('img21.png', 'Fig 2. Percent of most popular pet owned by Australians in 2021' , 'img21')">2021</button>
+    <button class="button3" onclick="show('img19n21.png', 'Fig 3. Percent of most popular pet owned by Australians in 2019 and 2021' , 'img19n21')">Both</button>
+    
+    <!-- Image container -->
+    <figure>
+        <img id="ChartImg" style="width:50%; display: none;"><br>
+        <!-- Caption container -->
+        <figcaption id="ChartCap"></figcaption>
+    </figure>
+    
+    <script>
+        function show(Image, ImgDesc, ImgAlt) 
+        {
+            // Correctly reference the ID as a string
+            document.getElementById('ChartImg').src = Image;
+            document.getElementById('ChartImg').alt = ImgAlt;
+            document.getElementById('ChartCap').innerHTML = ImgDesc;
+            document.getElementById('ChartImg').style.display = 'block';
+        }
+    </script>
+
+<p>With the increase in pet ownership the AMA are encouraging policy makers to consider the needs of companion animals and their owners when considering rental, strata and body corporate regulations are well as accepting animals in public places and transport.</p>
+
+<section class="image-grid">
+    <figure>
+        <img src="cat.jpg">
+        <img src="dog.png">
+        <img src="fish.jpg">
+    </figure>
+</section>
+
+	
+
+<footer>COS30045 Data Visualisation</footer>
+<footer>Semester 2 2023</footer>
+<footer>Ng Kang Jen</footer>
+
+</body>
+</html>
