@@ -1,29 +1,24 @@
 function init() {
     var w = 800; // bigger svg
     var h = 400; 
-    var padding = 20; 
-    var rightPadding = 30; 
+    var padding = 40; 
+    var rightPadding = 35; 
     var numXTicks = 10; // Control the number of x-axis ticks
     var numYTicks = 6;  // Control the number of y-axis ticks
-    
+
     var dataset = [
-        [5, 20],
-        [100, 90],
-        [250, 50],
-        [100, 33],
-        [330, 95],
-        [200, 20],
-        [150, 44],
-        [25, 67],
-        [85, 21],
-        [220, 88],
-        // Adding some outliers
-        [490, 5],  // Outlier with a high x value
-        [10, 95],  // Outlier with a high y value
-        [5, 150],  // Outlier with a y value above the usual range
-        [550, 50], // Outlier with an x value outside the chart width
+        [2, 8],
+        [3, 5],
+        [5, 17],
+        [6, 6],
+        [6, 12],
+        [7, 20],
+        [8, 22],
+        [10, 11],
+        [5, 12],
+        [6, 17],
     ];
-    
+
     var XScale = d3.scaleLinear()
         .domain([d3.min(dataset, function (d) {
             return d[0];
@@ -31,7 +26,7 @@ function init() {
             return d[0];
         })])
         .range([padding, w - padding - rightPadding]);
-    
+
     var YScale = d3.scaleLinear()
         .domain([d3.min(dataset, function (d) {
             return d[1];
@@ -39,12 +34,12 @@ function init() {
             return d[1];
         })])
         .range([h - padding, padding]);
-    
+
     var svg = d3.select("#chart")
         .append("svg")
         .attr("width", w)
         .attr("height", h);
-    
+
     svg.selectAll("circle")
         .data(dataset)
         .enter()
@@ -63,7 +58,7 @@ function init() {
                 return "slategrey";
             }
         });
-    
+
     svg.selectAll("text")
         .data(dataset)
         .enter()
@@ -96,7 +91,23 @@ function init() {
     svg.append("g")
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
+
+    // Add X axis label:
+    svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", w / 2) // Put the label to the right
+        .attr("y", h - 5) // Position above the axis
+        .text("Tree Age (year)");
+
+    // Y axis label:
+    svg.append("text")
+        .attr("text-anchor", "right")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 13) // Position to the right of the axis
+        .attr("x", -(h / 1.5)) // position just outside of
+        .text("Tree Height (m)");
 }
 
 // Initialize the chart on page load
 window.onload = init;
+
