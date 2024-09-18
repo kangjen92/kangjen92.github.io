@@ -59,6 +59,3 @@ function init(){
 // Initialize the chart on page load
 window.onload = init;
 
-
-
-

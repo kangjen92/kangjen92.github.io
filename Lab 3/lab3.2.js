@@ -6,6 +6,24 @@ function init() {
     var numXTicks = 10; // Control the number of x-axis ticks
     var numYTicks = 6;  // Control the number of y-axis ticks
 
+//  var dataset = [
+       // [5, 20],
+       // [100, 90],
+       // [250, 50],
+       // [100, 33],
+       // [330, 95],
+       // [200, 20],
+       // [150, 44],
+       // [25, 67],
+       // [85, 21],
+       // [220, 88],
+        // Adding some outliers
+       // [490, 5],  // Outlier with a high x value
+       // [10, 95],  // Outlier with a high y value
+       // [5, 150],  // Outlier with a y value above the usual range
+       // [550, 50], // Outlier with an x value outside the chart width
+   // ];//
+
     var dataset = [
         [2, 8],
         [3, 5],
@@ -95,16 +113,16 @@ function init() {
     // Add X axis label:
     svg.append("text")
         .attr("text-anchor", "middle")
-        .attr("x", w / 2) // Put the label to the right
-        .attr("y", h - 5) // Position above the axis
+        .attr("x", w / 2) // Put the label to the center
+        .attr("y", h - 5) // Position below the axis
         .text("Tree Age (year)");
 
     // Y axis label:
     svg.append("text")
         .attr("text-anchor", "right")
         .attr("transform", "rotate(-90)")
-        .attr("y", 13) // Position to the right of the axis
-        .attr("x", -(h / 1.5)) // position just outside of
+        .attr("y", 13) // Position to the above of the axis
+        .attr("x", -(h / 1.5)) // position to the center
         .text("Tree Height (m)");
 }
 
