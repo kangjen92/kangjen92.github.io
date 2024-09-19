@@ -10,6 +10,7 @@ function init () {
         .attr("width", w)
         .attr("height", h);
 
+    // The x scale and y scale just so the bars doesn't look out of proportion
     var xScale = d3.scaleBand()
         .domain(d3.range(dataset.length))
         .rangeRound([padding, w - padding])
@@ -19,7 +20,7 @@ function init () {
         .domain([0, d3.max(dataset)])
         .range([h - padding, padding]);
 
-    // Add y-axis
+    // this is to add y-axis
     var yAxis = d3.axisLeft(yScale)
         .ticks(5);
 

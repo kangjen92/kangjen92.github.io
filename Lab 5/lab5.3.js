@@ -10,6 +10,7 @@ function init() {
         .attr("width", w)
         .attr("height", h);
 
+    // The x scale and y scale just so the bars doesn't look out of proportion
     var xScale = d3.scaleBand()
         .domain(d3.range(dataset.length))
         .rangeRound([padding, w - padding])
@@ -19,6 +20,7 @@ function init() {
         .domain([0, d3.max(dataset)])
         .range([h - padding, padding]);
 
+    // this is to add y axis    
     var yAxis = d3.axisLeft(yScale)
         .ticks(5);
 
@@ -27,6 +29,7 @@ function init() {
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
 
+    // For the bar shape
     svg.selectAll("rect")
         .data(dataset)
         .enter()
@@ -43,10 +46,12 @@ function init() {
         })
         .attr("fill", "slategray");
 
-    svg.selectAll("text")
+    // Initial rendering with binding of the text labels
+    var labels = svg.selectAll(".label")
         .data(dataset)
         .enter()
         .append("text")
+        .attr("class", "label")
         .text(function(d) {
             return d;
         })
@@ -54,11 +59,11 @@ function init() {
             return xScale(i) + (xScale.bandwidth() / 2);
         })
         .attr("y", function(d) {
-            // Adjust label position so it's always visible even for small bars
-            var labelY = yScale(d) - 0;
-            return (labelY < padding) ? padding + 10 : labelY;
+            var labelY = yScale(d);
+            return (labelY < padding) ? padding + 10 : labelY - 5;  // Adjusted the y position
         })
-        .attr("text-anchor", "middle");
+        .attr("text-anchor", "middle")
+        .attr("fill", "black");
 
     // Add button for adding new data
     d3.select("#chart")
@@ -118,18 +123,19 @@ function init() {
             .remove();  // Remove from DOM
 
         // Bind the data to text labels and update them
-        var labels = svg.selectAll("text")
+        var labels = svg.selectAll(".label")
             .data(dataset);
 
         labels.enter()
             .append("text")
+            .attr("class", "label")
             .text(function(d) {
                 return d;
             })
             .attr("x", w)  // Start the new labels from the far right
             .attr("y", function(d) {
-                var labelY = yScale(d) - 0;
-                return (labelY < padding) ? padding + 10 : labelY;
+                var labelY = yScale(d);
+                return (labelY < padding) ? padding + 10 : labelY - 5;  // Adjusted y position
             })
             .attr("text-anchor", "middle")
             .merge(labels)
@@ -142,8 +148,8 @@ function init() {
                 return xScale(i) + (xScale.bandwidth() / 2);
             })
             .attr("y", function(d) {
-                var labelY = yScale(d) - 0;
-                return (labelY < padding) ? padding + 10 : labelY;
+                var labelY = yScale(d);
+                return (labelY < padding) ? padding + 10 : labelY - 5;  // Adjusted y position
             });
 
         // Exit and remove labels that no longer have corresponding data
@@ -182,3 +188,4 @@ function init() {
 
 // Initialize the chart on page load
 window.onload = init;
+
