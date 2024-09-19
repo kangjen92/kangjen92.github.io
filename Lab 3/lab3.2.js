@@ -37,6 +37,7 @@ function init() {
         [6, 17],
     ];
 
+    // The x scale and y scale just so the bars doesn't look out of proportion
     var XScale = d3.scaleLinear()
         .domain([d3.min(dataset, function (d) {
             return d[0];
@@ -70,7 +71,7 @@ function init() {
         })
         .attr("r", 5)
         .attr("fill", function (d) {
-            if (d[0] > 400 || d[1] > 80 || d[0] < 20 || d[1] > 90) {  
+            if (d[0] > 400 || d[1] > 80 || d[0] < 20 || d[1] > 90) {  // It will be all red because (demo)
                 return "red"; 
             } else {
                 return "slategrey";

@@ -47,6 +47,7 @@ var dataset = [
     [550, 50], // Outlier with an x value outside the chart width
 ];
 
+// The x scale and y scale just so the bars doesn't look out of proportion
 var XScale = d3.scaleLinear()
     .domain([d3.min(dataset, function (d) {
         return d[0];
@@ -63,6 +64,7 @@ var YScale = d3.scaleLinear()
     })])
     .range([h - padding, padding]);
 
+//Append to the body of the HTML
 var svg = d3.select("body")
     .append("svg")
     .attr("width", w)
@@ -92,7 +94,7 @@ svg.selectAll("text")
     .enter()
     .append("text")
     .text(function (d) {
-        return "(" + d[0] + ", " + d[1] + ")";
+        return "(" + d[0] + ", " + d[1] + ")"; // The (X, Y) value in the scatter plot
     })
     .attr("fill", "black")
     .attr("font-size", "10px")
