@@ -180,7 +180,7 @@ function init() {
     d3.select("#removeDataButton").on("click", function() {
         // Remove the first element of the dataset
         dataset.shift();
-
+        
         // Update the chart
         updateChart();
     });
