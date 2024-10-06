@@ -1,8 +1,8 @@
-function init() {
+function init () {
     var w = 500;
     var h = 300;
     var padding = 30;
-    var maxValue = 25;  // Define the maximum value for random numbers
+    var maxValue = 25;
     var dataset = [14, 18, 20, 16, 11, 19, 17, 12, 13, 15];
 
     var svg = d3.select("#chart")
@@ -20,11 +20,10 @@ function init() {
         .domain([0, d3.max(dataset)])
         .range([h - padding, padding]);
 
-    // This is to add y-axis
+    // this is to add y-axis
     var yAxis = d3.axisLeft(yScale)
-        .ticks(5);  // Number of ticks on the y-axis
+        .ticks(5);
 
-    // Append y-axis to the SVG
     svg.append("g")
         .attr("class", "axis")
         .attr("transform", "translate(" + padding + ",0)")
@@ -60,41 +59,35 @@ function init() {
             return xScale(i) + (xScale.bandwidth() / 2);
         })
         .attr("y", function(d) {
-            return yScale(d) - 0;
+            var labelY = yScale(d) - 0;
+            return labelY < padding ? padding + 10 : labelY;
         })
-        .attr("text-anchor", "middle");
+        .attr("text-anchor", "middle")
+        .attr("fill", "black");
 
-    // Add button for generating random data
-    d3.select("#chart")
-        .append("button")
-        .attr("id", "updateButton")
-        .text("Update");
+    // Add buttons for easing effects and updating
+    ["Update", "Ease Circle In", "Ease Circle Out", "Ease Elastic Out"].forEach(function(buttonText, i) {
+        d3.select("#chart")
+            .append("button")
+            .attr("id", buttonText.replace(/\s+/g, '') + "Button") // Clean up button IDs
+            .text(buttonText);
+    });
 
-    // Update the y-axis
-    svg.select(".axis").call(yAxis);
-
-    d3.select("#updateButton").on("click", function() {
-        // Generate random dataset
-        var numValues = dataset.length;
+    // Function to update chart with different easing
+    function updateChart(easeFunction) {
         var newDataset = [];
-
-        for (var i = 0; i < numValues; i++) {
-            var newNumber = Math.floor(Math.random() * maxValue);
-            newDataset.push(newNumber);
+        for (var i = 0; i < dataset.length; i++) {
+            newDataset.push(Math.floor(Math.random() * maxValue));
         }
 
-        // Update the yScale with the new dataset's maximum value
         yScale.domain([0, d3.max(newDataset)]);
 
-        // Update bars with transitions
+        // Update bars
         svg.selectAll("rect")
             .data(newDataset)
             .transition()
-            .delay(function(d, i) {
-                return i / dataset.length * 100;
-            })
-            .duration(2000)
-            .ease(d3.easeCubicInOut)
+            .duration(1000)
+            .ease(easeFunction)
             .attr("y", function(d) {
                 return yScale(d);
             })
@@ -102,22 +95,43 @@ function init() {
                 return h - padding - yScale(d);
             });
 
-        // Update text labels with transitions
+        // Update text labels
         svg.selectAll(".bar-label")
             .data(newDataset)
+            .transition()
+            .duration(1000)
+            .ease(easeFunction)
             .text(function(d) {
                 return d;
             })
-            .transition()
-            .delay(function(d, i) {
-                return i / dataset.length * 100;
-            })
-            .duration(2000)
-            .ease(d3.easeCubicInOut)
             .attr("y", function(d) {
                 var labelY = yScale(d) - 0;
-                return labelY < padding ? padding + 10 : labelY; // Ensure label visibility
+                return labelY < padding ? padding + 10 : labelY;
             });
+
+        // Update y-axis
+        svg.select(".axis")
+            .transition()
+            .duration(1000)
+            .ease(easeFunction)
+            .call(yAxis);
+    }
+
+    // Attach button event listeners
+    d3.select("#UpdateButton").on("click", function() {
+        updateChart(d3.easeLinear);
+    });
+
+    d3.select("#EaseCircleInButton").on("click", function() {
+        updateChart(d3.easeCircleIn);
+    });
+
+    d3.select("#EaseCircleOutButton").on("click", function() {
+        updateChart(d3.easeCircleOut);
+    });
+
+    d3.select("#EaseElasticOutButton").on("click", function() {
+        updateChart(d3.easeElasticOut);
     });
 }
 
