@@ -29,8 +29,12 @@ function init() {
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
 
+    // Function for updating the chart
     function updateChart() {
+        // Update the xScale domain to reflect the new dataset length
         xScale.domain(d3.range(dataset.length));
+
+        // Update the yScale to account for the new maximum value if necessary
         yScale.domain([0, d3.max(dataset)]);
 
     // Bind the data to bars and add new elements for new data points
