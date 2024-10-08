@@ -284,3 +284,15 @@ figure.pets figcaption {
     color: #555;       
     font-size: 16px;    
 }
+
+.halfMilMark {
+    stroke: red;
+    stroke-width: 2px;
+    stroke-dasharray: 5, 5;
+}
+
+.halfMilLabel {
+    fill: red;
+    font-size: 12px;
+    font-weight: bold;
+}
