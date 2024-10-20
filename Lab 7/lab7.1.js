@@ -71,7 +71,7 @@ function init() {
            .attr("y", -margin.left + 15)
            .text("Number of Unemployed");
 
-        // **Annotation for 500,000 Unemployment Level (Step 6 - retained)**
+        // Annotation for 500,000 Unemployment Level 
         svg.append("line")
            .attr("class", "line halfMilMark")
            .attr("x1", 0)
