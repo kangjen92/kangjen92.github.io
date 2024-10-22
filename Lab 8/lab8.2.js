@@ -14,13 +14,23 @@ function init() {
 
     // Set the color range (using a color scale from ColorBrewer)
     var color = d3.scaleQuantize()
-        .range(d3.schemePurples[9]); // 9 shades of blue
+        .range(d3.schemePurples[9]); // 9 shades of purple
 
     // Create SVG element
     var svg = d3.select("#chart")
         .append("svg")
         .attr("width", w)
         .attr("height", h);
+
+    // Tooltip div (custom style)
+    var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("background", "#f4f4f4")
+        .style("padding", "5px")
+        .style("border", "1px solid #ddd")
+        .style("border-radius", "3px")
+        .style("visibility", "hidden");
 
     // Load in the unemployment data
     d3.csv("VIC_LGA_unemployment.csv").then(function (data) {
@@ -76,9 +86,31 @@ function init() {
                         return projection([+d.lon, +d.lat])[1];
                     })
                     .attr("r", 4) // Radius of the circle
-                    .style("fill", "red"); // Circle color
+                    .style("fill", "red") // Circle color
+                    .on("mouseover", function (event, d) {
+                        // Check if the city name exists in the data
+                        if (d.place) {
+                            tooltip.style("visibility", "visible")
+                                .text(d.place); // Show city name
+                        } else {
+                            console.log("City name missing in data:", d);
+                        }
+                    })
+                    .on("mousemove", function (event) {
+                        tooltip.style("top", (event.pageY - 10) + "px")
+                            .style("left", (event.pageX + 10) + "px");
+                    })
+                    .on("mouseout", function () {
+                        tooltip.style("visibility", "hidden");
+                    });
+            }).catch(function(error) {
+                console.error("Error loading city data:", error);
             });
+        }).catch(function(error) {
+            console.error("Error loading GeoJSON data:", error);
         });
+    }).catch(function(error) {
+        console.error("Error loading unemployment data:", error);
     });
 }
 

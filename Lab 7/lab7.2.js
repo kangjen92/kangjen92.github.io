@@ -1,6 +1,6 @@
 function drawDonutChart() {
     // Set up data and SVG canvas
-    var data = [10, 20, 30, 40, 50];  // Example dataset with 5 numbers
+    var data = [10, 20, 30, 40, 50];  // an example dataset with 5 numbers
 
     var w = 300;  // Width and height of the SVG canvas
     var h = 300;
@@ -47,15 +47,6 @@ function drawDonutChart() {
         .text(function(d) {
             return d.data;  // Display the value for each slice
         });
-
-    // Add a title for the chart
-    svg.append("text")
-       .attr("x", 0)
-       .attr("y", -outerRadius - 20)
-       .attr("text-anchor", "middle")
-       .attr("font-size", "16px")
-       .attr("font-weight", "bold")
-       .text("Donut Chart");
 }
 
 // Call the function to draw the donut chart on page load
